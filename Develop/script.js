@@ -1,11 +1,12 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
-let _calendar = $("#calendar");                 //Tie in whole calendar div
-let _hours = [..._calendar.children()];              //Get a list of hours divs from the calendar
-let todayInHours = dayjs().format("HH");
-
 $(function () {
+  let _calendar = $("#calendar");                      //Tie in whole calendar div
+  let _hours = [..._calendar.children()];              //Get a list of hours divs from the calendar
+  let todayInHours = dayjs().format("HH");             //set var to HH format of current hour of dayjs on page load
+  let thingsToDo = [];
+
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
@@ -13,20 +14,16 @@ $(function () {
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
 
-  // 
   _calendar.on("click", (event) => {
-    if($(event.target).hasClass("saveBtn")){
-      
+    let target = $(event.target);
+    if(target.hasClass("saveBtn")){
+      target.prev()[0].value = target.prev()[0].value.trim();
+      console.log(thingsToDo);
     }
   })
   
-  //
-  // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
-
+  //Add styling to hour blocks based on time relative to current time when page is loaded
+  function checkTime(){
   _hours.forEach(hour => {
     if(hour.id.slice(-2) < todayInHours){
       $(hour).addClass("past");
@@ -36,13 +33,19 @@ $(function () {
       $(hour).addClass("future");
     }
   });
-
+  }
 
   // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-  //
+  // the values of the corresponding textarea elements.
+  
+  if(localStorage.getItem("thingsToDo") == null){
+    localStorage.setItem("thingsToDo", "");
+  } else if(localStorage.getItem("thingsToDo") != ""){
+    thingsToDo = JSON.stringify(localStorage.getItem("thingsToDo"));
+  }
+
   // TODO: Add code to display the current date in the header of the page.
 
+  checkTime();
 
 });
