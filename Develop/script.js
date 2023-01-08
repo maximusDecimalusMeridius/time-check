@@ -66,7 +66,7 @@ if(JSON.parse(localStorage.getItem("thingsToDo") == "")){
 }
 
 //Page setup on load
-
+$("#currentDay").text(dayjs().format("MMMM D, YYYY"));
 checkTime();                    //Check current time and apply appropriate styling
 populateTracker();              //Populate tracker with existing data
 });
