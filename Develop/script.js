@@ -6,6 +6,14 @@ $(function () {
   let _hours = [..._calendar.children()];              //Get a list of hours divs from the calendar
   let todayInHours = dayjs().format("HH");             //set var to HH format of current hour of dayjs on page load
   let thingsToDo = [];
+  
+  //Create newAppointment object and constructor
+  class appointment{
+    constructor(id){
+      this.id = id;
+      this.details = "";
+    }
+  }
 
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
@@ -40,8 +48,17 @@ $(function () {
   
   if(localStorage.getItem("thingsToDo") == null){
     localStorage.setItem("thingsToDo", "");
-  } else if(localStorage.getItem("thingsToDo") != ""){
-    thingsToDo = JSON.stringify(localStorage.getItem("thingsToDo"));
+  }
+  
+  if(JSON.parse(localStorage.getItem("thingsToDo") == "")){
+      //populate thingsToDo with objects and IDs of corresponding elements
+      for(let i = 0; i < _hours.length; i++){
+        let appointmentInfo = new appointment(_hours[i].id);
+        thingsToDo.push(appointmentInfo);
+        console.log(thingsToDo);
+      } 
+  } else {
+      thingsToDo = JSON.parse(localStorage.getItem("thingsToDo"));
   }
 
   // TODO: Add code to display the current date in the header of the page.
