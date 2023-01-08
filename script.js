@@ -43,9 +43,9 @@ _hours.forEach(hour => {
 
 //Populate the tracker on load
 function populateTracker() {
-for(let i = 0; i < thingsToDo.length; i++){
-  _calendar.children().eq(i).children("textarea")[0].value = thingsToDo[i].details;
-}
+  for(let i = 0; i < thingsToDo.length; i++){
+    _calendar.children().eq(i).children("textarea")[0].value = thingsToDo[i].details;
+  }
 }
 
 //Initialize local storage if it doesn't exist
@@ -66,7 +66,7 @@ if(JSON.parse(localStorage.getItem("thingsToDo") == "")){
 }
 
 //Page setup on load
-$("#currentDay").text(dayjs().format("MMMM D, YYYY"));
+$("#currentDay").text(dayjs().format("MMMM D, YYYY"));    //Set current date in the header and format
 checkTime();                    //Check current time and apply appropriate styling
 populateTracker();              //Populate tracker with existing data
 });
