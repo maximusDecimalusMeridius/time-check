@@ -30,7 +30,7 @@ You can visit the live application at - https://maximusDecimalusMeridius.github.
 
 
 
-![site-thumbnail](./assets/images/site-thumbnail.png "Website Thumbnail")
+![Sample Thumbnail](./Assets/images/site-thumbnail.png)
 
 ## Credits
 This favicon was generated using the following graphics from Twitter Twemoji:
