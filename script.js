@@ -15,6 +15,8 @@ class appointment{
 }
 
 _resetButton.on("click", (event) => {
+  
+  event.preventDefault();
   for(let i = 0; i < _allNotes.length; i++){
     _allNotes[i].value = "";
     thingsToDo[i].details = "";
@@ -27,6 +29,20 @@ _calendar.on("click", (event) => {
   let target = $(event.target);
   if(target.hasClass("saveBtn")){
     
+    for(let i = 0; i < _hours.length; i++){
+      if(_hours[i].id == target.parent()[0].id){
+        target.prev()[0].value = target.prev()[0].value.trim();
+        thingsToDo[i].details = target.prev()[0].value;
+        localStorage.setItem("thingsToDo", JSON.stringify(thingsToDo));
+      }
+    }
+
+  }
+
+  if(target.hasClass("fa-save")){
+    target = $(event.target.parentElement);
+    console.log("save");
+
     for(let i = 0; i < _hours.length; i++){
       if(_hours[i].id == target.parent()[0].id){
         target.prev()[0].value = target.prev()[0].value.trim();
