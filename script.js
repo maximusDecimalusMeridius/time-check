@@ -1,9 +1,12 @@
 $(function () {
 let _calendar = $("#calendar");                      //Tie in whole calendar div
 let _hours = [..._calendar.children()];              //Get a list of hours divs from the calendar
+let _resetButton = $("#reset-button");
+let _allNotes = $(".description");
 let todayInHours = dayjs().format("HH");             //set var to HH format of current hour of dayjs on page load
 let thingsToDo = [];                                 //Array that will hold all meeting objects (id, details) during user session
 
+console.log(_allNotes);
 //Create appointment object and constructor
 class appointment{
   constructor(id){
@@ -11,6 +14,14 @@ class appointment{
     this.details = "";
   }
 }
+
+_resetButton.on("click", (event) => {
+  for(let i = 0; i < _allNotes.length; i++){
+    _allNotes[i].value = "";
+    thingsToDo[i].details = "";
+    localStorage.setItem("thingsToDo", JSON.stringify(thingsToDo));
+  }
+})
 
 //Event listener for save button.  On save, trim() input and save it to the calendar
 _calendar.on("click", (event) => {
